@@ -866,6 +866,9 @@ void InitWiFi(){
 ~~~
 
 - Si cambio un valor desde la DB me imprime en consola el nuevo valor
-
+- El tipo de valor que lee al inicio en un JSON (medidas es un JSON)
+- Al hacerlo por cambio en el path nos evitamos latencia, cosa que si sucedería si tuvieramos que borrar y reescribir todo el JSON para que detecte que el cambio es un JSON y no solo un valor
+- Cuando modificamos el JSON desde la DB detecta el cambio, no se modificó todo el JSON, solo el valor que haya modificado
+- Es recomendable esta estrategia
 
 
