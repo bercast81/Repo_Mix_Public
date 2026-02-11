@@ -755,6 +755,117 @@ void initTime() {
 
 ## Callback Firebase
 
+- Vamos a detectar cuando cambia la base de datos, para eso vamos a usar una función callback
+- main.cpp
+
+~~~cpp
+#include <Arduino.h>
+#include <WiFi.h>
+#include <FirebaseESP32.h>
+
+#define SSID "Discovery117"
+#define PASS "0112358Pardas"
+void InitWiFi();
+
+#define DB_URL "callback-a7ce8-default-rtdb.firebaseio.com"       // URL de la base de datos.
+#define SECRET_KEY "tBGOeVXX1OC5V8qJ6ZrroCN0KlrT8KK6JzrYf7jH"     // Secreto de la base de datos.
+
+FirebaseData myFirebaseData;
+FirebaseAuth auth;
+FirebaseConfig config;
+
+//variables
+int valor;
+boolean movimiento;
+String namePath;
+
+void firebaseCallback(StreamData); //se ejecuta cuando ocurra un cambio en la DB
+void timeoutCallback(bool);        //nos dirá si excede o no el tiempo de espera
+String path = "ESP32/medidas";     //nuestro path base
+
+
+void setup() {
+  Serial.begin(9600);
+  InitWiFi();
+
+  config.database_url = DB_URL;
+  config.signer.tokens.legacy_token = SECRET_KEY;
+  Firebase.begin(&config, &auth);  // Inicializamos la conexión a Firebase
+  Firebase.reconnectWiFi(true);  //reestablezca la conexión
+
+  if(Firebase.beginStream(myFirebaseData, path)){    //a la escucha de lo que ocurra en el path ESP32/medidas
+//si se logra la conexió, le paso el FirebaseData, la función que se ejecutará cuando haya un cambio, y el timeout
+    Firebase.setStreamCallback(myFirebaseData, firebaseCallback, timeoutCallback);  
+  }else{
+    Serial.println("No se puede establecer conexión con la base de datos.");
+    Serial.println("Error: " + myFirebaseData.errorReason());
+  }
+
+}
+
+void loop() {
+  
+}
+                      //nos llega la data de tipo StreamData
+void firebaseCallback(StreamData data){
+  Serial.println("Cambios en la base de datos");
+  Serial.println(data.dataType());   // Que tipo de dato esta llegando
+  
+  // Tipos: int, float, string, boolean, null
+  if(data.dataType().equals("int")){
+    valor = myFirebaseData.intData();
+    namePath = myFirebaseData.dataPath(); //guardo el path
+    Serial.println(namePath + ": " + valor);
+
+      if(namePath.equals("/DHT11/humedad")){ //path completo ESP32/medidas/DHT11/humedad
+      Serial.print("Humedad: ");
+      Serial.println(valor);
+    }
+      if(namePath.equals("/DHT11/temperatura")){
+      Serial.print("Temperatura: ");
+      Serial.println(valor);
+    }
+  }
+
+  if(data.dataType().equals("boolean")){
+    movimiento = myFirebaseData.boolData();
+    namePath = myFirebaseData.dataPath();
+    Serial.println(namePath + ": " + movimiento);
+    movimiento==true?Serial.println("Movimiento detectado"):Serial.println("");
+  }
+
+}
+
+void timeoutCallback(bool timeCallback){
+  if(timeCallback){ //si está en true es que se ha excedido el límite de tiempo
+    Serial.println("Tiempo de espera excedido");
+  }
+}
+
+void InitWiFi(){
+  WiFi.begin(SSID, PASS);
+  Serial.print("Conectando a ");
+  Serial.print(SSID);
+
+  while(WiFi.status() != WL_CONNECTED){
+    Serial.print(".");
+    delay(100);
+  }
+
+  if(WiFi.status() == WL_CONNECTED){
+    Serial.println("");
+    Serial.println("");
+    Serial.println("Conexion exitosa!!!");
+    Serial.println("");
+    Serial.print("Tu IP es: ");
+    Serial.println(WiFi.localIP());
+  }else{
+    Serial.println("Fallo en conexion a internet");
+  }
+}
+~~~
+
+- Si cambio un valor desde la DB me imprime en consola el nuevo valor
 
 
 
