@@ -1,0 +1,23 @@
+{
+  "name": "dock-service",
+  "version": "1.0.0",
+  "author": "daprieto1",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/google-protobuf": "^3.15.9",
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "prisma": "^5.9.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.9.7",
+    "@grpc/proto-loader": "^0.7.10",
+    "@prisma/client": "^5.9.1"
+  },
+  "scripts": {
+    "db:gen": "sh scripts/prisma-gen.sh",
+    "proto:gen": "sh scripts/proto-gen.sh",    
+    "start:server": "ts-node server.ts"
+  }
+}

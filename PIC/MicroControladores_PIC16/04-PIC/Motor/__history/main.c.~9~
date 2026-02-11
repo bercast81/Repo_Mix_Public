@@ -1,0 +1,60 @@
+#include <16F877A.h>
+#fuses xt, nowdt
+#use delay(crystal=4MHz)
+
+
+//Los 4 botones del joystick irán del RB7:RB4
+#byte TRISB=0x86
+#byte PORTB=0x06
+
+//Motor en el puerto C, RC3:RC0
+#byte TRISC=0x87
+#byte PORTC=0x07
+
+#bit rb_flag=0x0b.0 //flag de la interrupción por nivel de RB7:RB4
+
+#define derechas 0
+#define izquierdas 1
+
+//Variables globales
+int delaytime_ms=15; //para la velocidad de giro
+int sentido=derechas; //para dirigir a izquierda(1) o derecha(0)
+
+void main()
+{
+   //Perifericos
+   //Gpios
+   TRISC=0xF0; //11110000
+   PORTC=0b00001100; //Situación inicial del motor
+   //Configuración de la interrupción por nivel de RB7:Rb4
+   rb_flag=0;
+   //Habilitacion de las interrupciones
+   enable_interrupts(global);
+   enable_interrupts(int_rb);
+   
+   //variables locales
+   int const half_step_derechas[8]={0b00001100,0b00000100,0b00000110,0b00000010,0b00000011,0b00000001,0b00001001,0b00001000};
+   //int const full_step_derechas[4]={0b00001100,0b00000110,0b00000011,0b00001001};
+   //int const wave_drive_derechas[4]={0b00001000,0b00000100,0b00000010,0b00000001};
+   int i = 0;
+   
+   while(TRUE)
+   {
+      PORTC=half_step_derechas[i]; //ejecutamos medio paso
+      delay_ms(delaytime_ms);
+      //Giro a la derecha
+      if(sentido=derechas){
+         if(i==7) i =0;
+         else i++;
+      }
+      //Giro a la izquierda
+       else{
+         if(i==0)i=7;
+         else i--;
+       }
+      
+   
+   }
+
+
+}

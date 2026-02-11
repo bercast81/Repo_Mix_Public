@@ -1,0 +1,53 @@
+//syntax declaration specifying the version of the Protocol Buffers language syntax being used.
+syntax = "proto3";
+
+//You can specify the package that the messages in the file belong to. This helps in organizing and avoiding naming conflicts.
+package employees;
+option go_package = "grpc-node/basic/pb/employees";
+option csharp_namespace = "Employees";
+
+// Business Entities
+//The core of a proto file is the definition of messages. Messages are used to structure the data you want to serialize.
+message Employee {
+  int32   id = 1;
+  int32   badgeNumber = 2;
+  string  firstName = 3;
+  string  lastName = 4;
+  float   vacationAccrualRate = 5;
+  float   vacationAccrued = 6;
+}
+
+/**
+* EmployeeService
+* Defines all the gRPC operations that the server should offer.
+*
+* Protobuf supports the definition of services, which are used to define remote procedures that can be called by remote clients.
+*/
+service IEmployeeService {
+  rpc GetByBadgeNumber (GetByBadgeNumberRequest) returns (EmployeeResponse);
+  rpc Save (EmployeeRequest) returns (EmployeeResponse);
+  rpc GetAll (GetAllRequest) returns (stream EmployeeResponse);
+  rpc AddPhoto (stream AddPhotoRequest) returns (AddPhotoResponse);
+  rpc SaveAll (stream EmployeeRequest) returns (stream EmployeeResponse);
+}
+
+// Communication Entities - Requests
+message GetAllRequest {}
+
+message GetByBadgeNumberRequest {
+  int32 badgeNumber = 1;
+}
+message EmployeeRequest {
+  Employee employee = 1;
+}
+message AddPhotoRequest {
+  bytes data = 1;
+}
+
+// Communication Entities - Responses
+message EmployeeResponse {
+  Employee employee = 1;
+}
+message AddPhotoResponse {
+  bool isOk = 1;
+}

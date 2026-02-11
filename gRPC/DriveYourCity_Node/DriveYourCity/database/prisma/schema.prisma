@@ -1,0 +1,41 @@
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+}
+
+model Dock {
+  id        Int      @id 
+  maxBikes  Int      @default(5)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bikes Bike[]
+  originRides Ride[] @relation("originDock")
+  targetRides Ride[] @relation("targetDock")
+}
+
+model Bike {
+  id        Int       @id 
+  dockId    Int?       
+  totalKm   Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  dock      Dock?     @relation(fields: [dockId], references: [id])
+  rides     Ride[]    @relation("ride")
+}
+
+model Ride {
+  id            Int       @id @default(sequence())  
+  km            Int      
+  bikeId        Int
+  originDockId  Int
+  targetDockId  Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  bike          Bike      @relation("ride", fields: [bikeId], references: [id])
+  originDock    Dock      @relation("originDock", fields: [originDockId], references: [id])
+  targetDock    Dock?     @relation("targetDock", fields: [targetDockId], references: [id])
+}

@@ -1,0 +1,45 @@
+#include <16F877A.h>
+#fuses xt, nowdt
+#use delay(crystal=4MHz)
+
+#byte TRISB=0x86
+#byte PORTB=0x06
+
+int segundos=0;
+
+//Interrupciones
+#int_ext
+void ext_isr(){
+   segundos++;
+}
+
+void main()
+{
+     //Configuración periféricos
+     //Configuración GPIOs
+     TRISB=0x00000011; //todo salidas excepto RB0 (interrupción) y RB1 (hacer sonar)
+
+   //Configuración de la interrupción externa por RB0
+   ext_int_edge(H_TO_L); //config por flanco de bajada
+   
+   //habilitación de las interrupciones (para poder saltar al vector de interrupción)
+   enable_interrupts(global); //pone a 1 los bits GIE y PEIE
+   enable_interrupts(int_ext); //pone a 1 el bit INTE
+   
+   while(TRUE)
+   {
+      //el botón va a estar en RB1
+      if(bit_test(PORTB,1)==0){
+         //encendemos el buzzer que va a estar en el pin 7
+         bit_set(PORTB,7);
+         
+         for(int i =0; i <= segundos; i++){ //bucle proporcional a la cantidad de veces que se ha pulsado RB0
+            delay_ms(1000);
+         }
+         
+         bit_clear(PORTB,7);
+         segundos=0;
+      }
+   }
+
+}

@@ -1,0 +1,142 @@
+#include <16F877A.h>
+#fuses xt, nowdt
+#use delay(crystal=4MHz)
+
+//driver lcd
+#include <lcd.c>
+
+//Los 4 botones del joystick irán del RB7:RB4
+#byte TRISB=0x86
+#byte PORTB=0x06
+
+//Motor en el puerto C, RC3:RC0
+#byte TRISC=0x87
+#byte PORTC=0x07
+
+#bit rb_flag=0x0b.0 //flag de la interrupción por nivel de RB7:RB4
+
+#define derechas 0
+#define izquierdas 1
+
+//Variables globales
+int delaytime_ms=15; //para la velocidad de giro
+int sentido=derechas; //para dirigir a izquierda(1) o derecha(0)
+int flanco_bajada= 0; //flag para saber si el salto al vectro de interrupción 
+                     //se ha realizado por flanco de subida o de bajada
+int mando[4]={0,0,0,0}; //Derecha, abajo (más lento), izquierda, arriba (más rápido)
+
+//Prototipos
+void actualizar_estado();
+void disminuir_velocidad();
+void aumentar_velocidad();
+
+//Interrupciones
+#int_rb
+void rb_isr(){
+//como el joystick es equivalente a apretar un botón hay que eliminar rebotes
+   delay_ms(20); //eliminar rebotes
+   //comprobamos que botón se ha pulsado entre RB7:RB4
+   for(int i=4; i<=7; i++){
+   if(bit_test(PORTB,i)==0){ //si es igual a 0 porque es pull up, si lo hemos pulsado
+      mando[i-4]=1; //guardamos la opción elegida poniéndola a 1 
+      //como hemos hemos entrado aquí es que hemos entrado por flanco de bajada
+      flanco_bajada=1; //Activamos el flag de flanco de bajada
+   }
+   else mando[i-4]=0;  //Ponemos a 0 la opción no elegida
+  }
+  //realizamos lo que se nos ha pedido en función de lo que hay en mando
+  //y de si hemos entrado por flanco de bajada
+  
+  if(flanco_bajada==1){
+  actualizar_estado();
+   flanco_bajada=0;
+  }
+
+}
+
+
+void main()
+{
+   //Perifericos
+   //Gpios
+   TRISC=0xF0; //11110000
+   PORTC=0b00001100; //Situación inicial del motor
+   //Configuración de la interrupción por nivel de RB7:Rb4
+   rb_flag=0;
+   //Habilitacion de las interrupciones
+   enable_interrupts(global);
+   enable_interrupts(int_rb);
+   
+   //variables locales
+   int const half_step_derechas[8]={0b00001100,0b00000100,0b00000110,0b00000010,0b00000011,0b00000001,0b00001001,0b00001000};
+   //int const full_step_derechas[4]={0b00001100,0b00000110,0b00000011,0b00001001};
+   //int const wave_drive_derechas[4]={0b00001000,0b00000100,0b00000010,0b00000001};
+   int i = 0;
+   
+
+   
+   
+   while(TRUE)
+   {
+      PORTC=half_step_derechas[i]; //ejecutamos medio paso
+      delay_ms(delaytime_ms);
+      //Giro a la derecha
+      if(sentido=derechas){
+         if(i==7) i =0;
+         else i++;
+      }
+      //Giro a la izquierda
+       else{
+         if(i==0)i=7;
+         else i--;
+       }
+      
+   
+   }
+
+
+}
+
+//función que realiza la orden pedida por el joystick
+//girar a derechas, reducir la velocidad, girar a izquierdas o aumentar la velocidad de giro
+void actualizar_estado(){
+   //la opción está en la matriz mando
+   for(int i = 0; i<4;i++){
+      if(mando[i]==1){
+         switch (i){
+            //Girar a derechas
+            case 0:   sentido=derechas;
+            
+               break;
+            //Reducir velocidad
+            case 1:  disminuir_velocidad();
+            
+               break;
+            //Girar a izquierdas
+            case 2: sentido=izquierdas;
+            
+               break;
+            //Aumentar velocidad   
+            case 3:   aumentar_velocidad();
+            
+               break;
+                
+         }
+      }
+   }
+   
+}
+
+//Función disminuye velocidad de giro aumentando deklay entre pasos
+void disminuir_velocidad(){
+  if(delaytime_ms=20) delaytime_ms=20;
+  else delaytime_ms = delaytime_ms+1;
+  
+}
+
+void aumentar_velocidad(){
+  if(delaytime_ms=10) delaytime_ms=10; //El tope minimo que indica el fabricante es 100Hz = 10 milisegundos
+  else delaytime_ms = delaytime_ms-1;  
+}
+
+

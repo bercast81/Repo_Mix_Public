@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package DriveYourCity;
+
+import "Entities.proto";
+
+service IRideService {
+    rpc StartRide (StartRideRequest) returns (RideResponse);
+    rpc UpdateRide (stream UpdateRideRequest) returns (stream RideResponse);
+    rpc EndRide (EndRideRequest) returns (stream EndRideResponse);
+}
+
+// Communication Entities - Requests
+message StartRideRequest {
+    int32 bikeId = 1;    
+}
+
+message UpdateRideRequest {
+    int32 rideId    = 1;
+    int32 newKms    = 2;
+}
+
+message EndRideRequest {
+    int32 rideId = 1;
+    int32 dockId = 2;
+}
+
+// Communication Entities - Responses
+message RideResponse {
+    Ride ride = 1;    
+}
+
+message EndRideResponse {
+    string info = 1;
+}

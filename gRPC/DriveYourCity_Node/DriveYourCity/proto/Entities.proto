@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package DriveYourCity;
+
+message Bike {
+    int32   id = 1;
+    int32   totalKm = 2;
+    Dock    dock = 3;
+}
+
+message Dock {
+    int32       id = 1;
+    int32       maxBikes = 2;
+    repeated    Bike bikes = 3;
+}
+
+message Ride {
+    int32   id = 1;    
+    int32   km = 2;
+    Bike    bike = 3;
+    Dock    originDock = 4;
+    Dock    targetDock = 5;    
+}

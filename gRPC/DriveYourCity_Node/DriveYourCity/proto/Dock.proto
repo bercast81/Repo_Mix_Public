@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package DriveYourCity;
+
+import "Entities.proto";
+
+service IDockService {
+  rpc CreateDock (CreateDockRequest) returns (DockResponse);
+  rpc GetAllDocks (GetAllDocks) returns (stream DockResponse);
+  rpc GetDockById (GetDockByIdRequest) returns (DockResponse);
+  rpc IsDockAvailable(IsDockAvailableRequest) returns (IsDockAvailableResponse);
+}
+
+// Communication Entities - Requests
+message CreateDockRequest {
+  Dock dock = 1;
+}
+message GetAllDocks {
+
+}
+message GetDockByIdRequest {
+  int32 dockId = 1;
+}
+message IsDockAvailableRequest {
+  int32 dockId = 1;
+}
+
+// Communication Entities - Responses
+message DockResponse {
+  Dock dock = 1;
+}
+message IsDockAvailableResponse {
+  bool isAvalable = 1;
+}
+

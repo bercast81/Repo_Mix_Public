@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package DriveYourCity;
+
+import "Entities.proto";
+
+service IBikeService {
+    rpc GetBikeById (GetBikeByIdRequest) returns (BikeResponse);
+    rpc CreateBike (BikeRequest) returns (BikeResponse);
+    rpc AttachBikeToDock (AttachBikeToDockRequest) returns (BikeResponse);
+    rpc UnAttachBikeFromDock (UnAttachBikeFromDockRequest) returns (BikeResponse);
+}
+
+// Communication Entities - Requests
+message GetBikeByIdRequest {
+  int32 bikeId = 1;
+}
+message BikeRequest {
+  Bike bike = 1;
+}
+
+message AttachBikeToDockRequest {
+  int32 bikeId = 1;
+  int32 dockId = 2;
+  int32 totalKms = 3;
+}
+
+message UnAttachBikeFromDockRequest {
+  int32 bikeId = 1;  
+}
+
+// Communication Entities - Responses
+message BikeResponse {
+  Bike bike = 1;
+}

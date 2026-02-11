@@ -1,0 +1,17 @@
+#include <16F877A.h>
+#fuses xt, nowdt
+#use delay(crystal=4MHz)
+
+
+
+void main()
+{
+
+   while(TRUE)
+   {
+
+
+      //TODO: User Code
+   }
+
+}

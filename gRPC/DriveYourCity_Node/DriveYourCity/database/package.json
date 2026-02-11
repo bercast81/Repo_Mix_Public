@@ -1,0 +1,14 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "db:migrate": "npx prisma migrate dev --schema ./prisma/schema.prisma",
+    "db:push": "npx prisma db push --schema ./prisma/schema.prisma"
+  },
+  "dependencies": {
+    "@prisma/client": "5.8.1",
+    "prisma": "^5.8.1"
+  }
+}

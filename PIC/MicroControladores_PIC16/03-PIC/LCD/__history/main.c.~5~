@@ -1,0 +1,37 @@
+#include <16F877A.h>
+#fuses xt, nowdt
+#use delay(crystal=4MHz)
+
+#include <lcd.c>
+
+#use standard_io(C)
+#use standard_io(B)
+
+
+void main()
+{
+      //Configuración de las GPIOs
+      port_b_pullups(true); //activamos las resistencias de pull up del puerto B
+      //LCD
+      lcd_init();
+      
+      int seleccion=1;
+      
+
+   while(TRUE)
+   {
+
+
+      
+   }
+
+}
+
+void Escribir_Menu(seleccion){
+
+}
+
+
+void LEDs(seleccion){
+
+}

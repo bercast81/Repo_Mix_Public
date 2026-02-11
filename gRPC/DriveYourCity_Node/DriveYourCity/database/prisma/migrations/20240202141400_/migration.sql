@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Ride" ADD COLUMN     "f" INT4 NOT NULL DEFAULT 0;

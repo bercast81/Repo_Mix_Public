@@ -1,0 +1,54 @@
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID 
+  DELIVERED
+  CANCELED
+}
+
+model Order {
+  id            String  @id  @default(uuid())
+  totalAmount   Float
+  totalItems    Int
+  status        OrderStatus @default(PENDING)
+  paid Boolean  @default(false)
+  paidAt        DateTime?
+  stripeChargeId String? 
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  OrderItem     OrderItem[]
+  OrderReceipt  OrderReceipt?
+}
+
+model OrderItem{
+  id   String @id  @default(uuid())
+  productId Int  //no hay una relación física con SQLite
+  quantity Int
+  price Float //los precios pueden variar. Este precio se queda aquí en el momento de la orden
+  
+  Order Order? @relation(fields: [orderId], references: [id]) //establezco la relación
+  orderId String?
+}
+
+model OrderReceipt{
+  id String @id @default(uuid())
+  order Order @relation(fields: [orderId], references: [id])
+  orderId String @unique
+  receiptUrl String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+

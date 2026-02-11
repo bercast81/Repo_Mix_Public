@@ -1,0 +1,92 @@
+#include <16F877A.h>
+#fuses xt, nowdt
+#use delay(crystal=4MHz)
+
+#include <lcd.c>
+
+#use standard_io(C)
+#use standard_io(B)
+
+void EscribirMenu(int);
+void LEDs(int);
+
+void main()
+{
+      //Configuración de las GPIOs
+      port_b_pullups(true); //activamos las resistencias de pull up del puerto B
+      //LCD
+      lcd_init();
+      
+      int seleccion=1;
+      //Inicialización previa
+      
+
+   while(TRUE)
+   {
+      
+
+      
+   }
+
+}
+
+void Escribir_Menu(seleccion){
+   switch(seleccion){
+      case 1: lcd_putc('\f'); //limpiamos el LCD y lo llevamos a la posición 1,1
+              lcd_putc("Encender led 1");
+              break;
+      case 2: lcd_putc('\f'); //limpiamos el LCD y lo llevamos a la posición 1,1
+              lcd_putc("Encender led 2");
+              break;
+      case 3: lcd_putc('\f'); //limpiamos el LCD y lo llevamos a la posición 1,1
+              lcd_putc("Encender led 3");
+              break;
+      default: 
+              break;
+   }
+}
+
+
+void LEDs(seleccion){
+   switch(seleccion){
+      case 1: OUTPUT_HIGH(PIN_C0);
+              OUTPUT_LOW(PIN_C1);
+              OUTPUT_LOW(PIN_C2);
+              break;
+      case 2: OUTPUT_HIGH(PIN_C1);
+              OUTPUT_LOW(PIN_C0);
+              OUTPUT_LOW(PIN_C2);
+              break;
+      case 3: OUTPUT_HIGH(PIN_C2);
+              OUTPUT_LOW(PIN_C0);
+              OUTPUT_LOW(PIN_C1);
+              break;
+      default: 
+              break;
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

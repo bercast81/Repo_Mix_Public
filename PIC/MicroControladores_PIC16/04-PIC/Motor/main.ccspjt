@@ -1,0 +1,59 @@
+[PROJECT]
+Target=main.hex
+Processor_Text=PIC16F877A
+CCSVerions=5.076
+Compiler=PCM
+CCSVersion=5.076
+[Target Data]
+FileList=main.c
+[Directories]
+Include=
+[C:\Users\meika\Documents\18-C\MicroControladores_PIC\04-PIC\Motor\main]
+Type=4
+[mru-list]
+1=main.c
+
+[fileformats]
+forcecoff=0
+
+[ProjectLog]
+Days=2
+D1=19-12-2025
+D1_L=6
+D1_L1=[49221]Project Opened.
+D1_L2=[49231]Started Editing.
+D1_L3=[50732]Stopped Editing.
+D1_L4=[51230]Started Editing.
+D1_L5=[51575]Stopped Editing.
+TotalEdit=88
+TotalDebug=0
+D1_E=26
+D1_D=0
+D1_L6=[51575]Project Closed.
+D2=21-12-2025
+D2_L=10
+D2_L1=[61107]Project Opened.
+D2_L2=[61117]Started Editing.
+D2_L3=[61670]Stopped Editing.
+D2_L4=[61869]Started Editing.
+D2_L5=[65092]Stopped Editing.
+D2_E=62
+D2_D=0
+D2_L6=[65094]Project Closed.
+D2_L7=[65778]Project Opened.
+D2_L8=[65817]Started Editing.
+D2_L9=[66617]Stopped Editing.
+D2_L10=[68139]Project Closed.
+
+[Opened Files]
+1=main.c
+t1=140
+Count=1
+[main.c]
+Type=4
+
+[defines]
+buildcount=5
+[Units]
+Count=1
+1=main (main)

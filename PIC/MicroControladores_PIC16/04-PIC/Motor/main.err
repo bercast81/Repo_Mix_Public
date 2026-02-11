@@ -1,0 +1,13 @@
+Compiling C:\Users\meika\Documents\18-C\MicroControladores_PIC\04-PIC\Motor\main on 21-dic.-25 at 18:24
+>>> Warning 201 "main.c" Line 89(1,1): Assignment inside relational expression
+>>> Warning 201 "main.c" Line 143(1,1): Assignment inside relational expression
+>>> Warning 201 "main.c" Line 149(1,1): Assignment inside relational expression
+>>> Warning 216 "main.c" Line 151(1,2): Interrupts disabled during call to prevent re-entrancy:  (@delay_ms1)
+>>> Warning 216 "main.c" Line 151(1,2): Interrupts disabled during call to prevent re-entrancy:  (lcd_send_byte)
+>>> Warning 216 "main.c" Line 151(1,2): Interrupts disabled during call to prevent re-entrancy:  (@PSTRINGC7_663)
+>>> Warning 216 "main.c" Line 151(1,2): Interrupts disabled during call to prevent re-entrancy:  (@PSTRINGCN7_663)
+>>> Warning 216 "main.c" Line 151(1,2): Interrupts disabled during call to prevent re-entrancy:  (@PRINTF_D_663)
+>>> Warning 216 "main.c" Line 151(1,2): Interrupts disabled during call to prevent re-entrancy:  (lcd_putc)
+      Memory usage:   ROM=13%      RAM=7% - 17%
+      0 Errors,  9 Warnings.
+Build Successful.

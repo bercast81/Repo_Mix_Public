@@ -1,0 +1,67 @@
+[PROJECT]
+Target=main.hex
+Processor_Text=PIC16F877A
+CCSVerions=5.076
+Compiler=PCM
+CCSVersion=5.076
+[Target Data]
+FileList=main.c
+[Directories]
+Include=
+[C:\Users\meika\Documents\18-C\MicroControladores_PIC\03-PIC\LCD\main]
+Type=4
+[mru-list]
+1=main.c
+
+[fileformats]
+forcecoff=0
+
+[ProjectLog]
+Days=3
+D1=11-12-2025
+D1_L=4
+D1_L1=[8891]Project Opened.
+D1_L2=[8918]Started Editing.
+D1_L3=[8926]Stopped Editing.
+TotalEdit=80
+TotalDebug=0
+D1_E=1
+D1_D=0
+D1_L4=[8926]Project Closed.
+D2=12-12-2025
+D2_L=14
+D2_L1=[6688]Project Opened.
+D2_L2=[6697]Started Editing.
+D2_L3=[9271]Stopped Editing.
+D2_E=79
+D2_D=0
+D2_L4=[10946]Project Closed.
+D2_L5=[19147]Project Opened.
+D2_L6=[19164]Started Editing.
+D2_L7=[20710]Stopped Editing.
+D2_L8=[20713]Started Editing.
+D2_L9=[21860]Stopped Editing.
+D2_L10=[21860]Project Closed.
+D2_L11=[21871]Project Opened.
+D2_L12=[21882]Started Editing.
+D2_L13=[21890]Stopped Editing.
+D2_L14=[21890]Project Closed.
+D3=19-12-2025
+D3_L=2
+D3_L1=[49120]Project Opened.
+D3_L2=[49221]Project Closed.
+
+[Opened Files]
+1=main.c
+t1=1
+2=..\..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16F877A.h
+t2=1
+Count=2
+[main.c]
+Type=4
+
+[defines]
+buildcount=2
+[Units]
+Count=1
+1=main (main)

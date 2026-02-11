@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Bike" ADD COLUMN     "totalKm" INT4 NOT NULL DEFAULT 0;
