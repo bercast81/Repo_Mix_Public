@@ -377,3 +377,4 @@ myJson["Andidado"] //no es un float ni un JsonObject, es un JsonVariant
 ~~~cpp
 .as<T> // donde T es el tipo 
 ~~~
+---------

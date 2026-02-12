@@ -405,3 +405,4 @@ void loop() {
 
 - Para generar el bitmap en la web voy a tener que pasarle el tamaño (128x64), color WHITE, Brightness 128, en Scaling: scale to fit. keeping proportions, center: horizontally y darle a Generate Code
 - Un bitmap puede ser cualquier imagen para representar en la pantalla
+-----

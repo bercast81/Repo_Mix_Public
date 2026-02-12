@@ -585,3 +585,6 @@ void loop(){
 ~~~
 
 - Para observarlo necesitamos un osciloscopio
+---------
+
+
